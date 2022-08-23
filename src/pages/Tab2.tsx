@@ -33,28 +33,24 @@ const Tab2: React.FC = () => {
     "ABOLI",
   ];
   let alreadyDone:any = [];
-  const randomValueFromArray = () => {
-    if (alreadyDone.length === 0) {
-      for (let i:number = 0; i < array.length; i++) alreadyDone.push(i);
-    }
-  
-    let randomValueIndex = Math.floor(Math.random() * alreadyDone.length);
+  const [arrI, setArrI] = useState([]);
 
-    let indexOfItemInMyArray = alreadyDone[randomValueIndex];
-  
-    alreadyDone.splice(randomValueIndex, 1);
-  
-    setNoRepeat(array[indexOfItemInMyArray])
-    console.log(indexOfItemInMyArray);
+
+  const randomValueFromArray = () => {
+    if (arrI.length === 0) {
+      for (let i:number = 0; i < array.length; i++) alreadyDone.push(i);
+      setArrI(alreadyDone);
+    }
+    
+    let randomValueIndex = Math.floor(Math.random() * arrI.length);
+    let indexOfItemInMyArray = arrI[randomValueIndex];
+    
     console.log(alreadyDone);
-    console.log(randomValueIndex);
-    // console.log(alreadyDone);
-    // return myArray[indexOfItemInMyArray];
+    arrI.splice(randomValueIndex, 1);
+    
+    console.log("arrI",arrI);
+    setNoRepeat(array[indexOfItemInMyArray])
   };
-  
-  // randomValueFromArray(["a", "b", "c", "d", "e", "f"]);
-  
-  
   
   const strRandom = () => {
     let result = "";
@@ -117,10 +113,10 @@ const Tab2: React.FC = () => {
         </IonHeader>
 
         <h1>Home</h1>
-        <h1>{test}</h1>
+        {/* <h1>{test}</h1>
         <button onClick={strRandom}>Generer</button>
         <input onChange={handleChange} value={value} name="value" />
-        <button onClick={compare}>Soumettre</button>
+        <button onClick={compare}>Soumettre</button> */}
         <h1>{noRepeat}</h1>
         <button onClick={randomValueFromArray}>repeat</button>
         <ExploreContainer name="Tab 2 page" />
