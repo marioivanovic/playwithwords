@@ -12,6 +12,8 @@ import "./Tab2.css";
 const Tab2: React.FC = () => {
   const [test, setTest] = useState("Aucun Mot");
   const [value, setValue] = useState("");
+  const [noRepeat, setNoRepeat] = useState("");
+  const [color, setColor] = useState([{ color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []}]);
   const array = [
     "ABACA",
     "ABALE",
@@ -30,11 +32,30 @@ const Tab2: React.FC = () => {
     "ABOIS",
     "ABOLI",
   ];
+  let alreadyDone:any = [];
+  const randomValueFromArray = () => {
+    if (alreadyDone.length === 0) {
+      for (let i:number = 0; i < array.length; i++) alreadyDone.push(i);
+    }
+  
+    let randomValueIndex = Math.floor(Math.random() * alreadyDone.length);
 
-  // useEffect(() => {
-  //   strRandom();
-  // }, []);
-
+    let indexOfItemInMyArray = alreadyDone[randomValueIndex];
+  
+    alreadyDone.splice(randomValueIndex, 1);
+  
+    setNoRepeat(array[indexOfItemInMyArray])
+    console.log(indexOfItemInMyArray);
+    console.log(alreadyDone);
+    console.log(randomValueIndex);
+    // console.log(alreadyDone);
+    // return myArray[indexOfItemInMyArray];
+  };
+  
+  // randomValueFromArray(["a", "b", "c", "d", "e", "f"]);
+  
+  
+  
   const strRandom = () => {
     let result = "";
     let charactersLength = array.length;
@@ -60,7 +81,11 @@ const Tab2: React.FC = () => {
               if (worldSplit.toLocaleUpperCase() === strSplit.toLocaleUpperCase()) {
                 console.log("color green ", strSplit, worldSplit);
               }
-              if (worldSplit.toLocaleUpperCase() !== strSplit.toLocaleUpperCase() && test.includes(strSplit.toUpperCase())) {
+              if (
+                worldSplit.toLocaleUpperCase() !==
+                  strSplit.toLocaleUpperCase() &&
+                test.includes(strSplit.toUpperCase())
+              ) {
                 console.log("color orange ", strSplit, worldSplit);
               }
             }
@@ -96,6 +121,8 @@ const Tab2: React.FC = () => {
         <button onClick={strRandom}>Generer</button>
         <input onChange={handleChange} value={value} name="value" />
         <button onClick={compare}>Soumettre</button>
+        <h1>{noRepeat}</h1>
+        <button onClick={randomValueFromArray}>repeat</button>
         <ExploreContainer name="Tab 2 page" />
       </IonContent>
     </IonPage>
