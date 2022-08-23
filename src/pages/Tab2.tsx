@@ -28,7 +28,8 @@ const Tab2: React.FC = () => {
     "ABOIS",
     "ABOLI",
   ];
-  const [arrI, setArrI] = useState([]);
+  const [arrI, setArrI] = useState([...array]);
+  const [arrayWord, setArrayWord] = useState([]);
   const [isValid, setIsValid] = useState(false);
   const [isRefrech, setIsrefrech] = useState(false);
   const [test, setTest] = useState("Aucun Mot");
@@ -36,61 +37,67 @@ const Tab2: React.FC = () => {
   const [value, setValue] = useState("");
   const [noRepeat, setNoRepeat] = useState("");
   const [str, setStr] = useState("");
-  const [color, setColor] = useState([{ color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []}]);
-  let alreadyDone:any = [];
-  // let nbrTest = 0;
+  const [color, setColor] = useState([
+    { color: "", value: [] },
+    { color: "", value: [] },
+    { color: "", value: [] },
+    { color: "", value: [] },
+    { color: "", value: [] },
+  ]);
+  let alreadyDone: any = [];
 
   useEffect(() => {
-    strRandom();
-    // randomValueFromArray();
-  }, [])
-  
+    randomValueFromArray();
+    // strRandom();
+  }, []);
+
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+  };
 
   const randomValueFromArray = () => {
-    if (arrI.length === 0) {
-      for (let i:number = 0; i < array.length; i++) alreadyDone.push(i);
-      setArrI(alreadyDone);
-    }
-    
     let randomValueIndex = Math.floor(Math.random() * arrI.length);
-    let indexOfItemInMyArray = arrI[randomValueIndex];
+    let wordOfItemInMyArray = arrI[randomValueIndex];
 
     arrI.splice(randomValueIndex, 1);
-    setNoRepeat(array[indexOfItemInMyArray]);
-  };
-  
-  const strRandom = () => {
-    let result = "";
-    let charactersLength = array.length;
-    result += array[Math.floor(Math.random() * charactersLength)];
-    setTest(result);
-    console.log(result);
+    setNoRepeat(wordOfItemInMyArray);
   };
 
-  const compare = async () => {
-    if (value.toLocaleLowerCase() === test.toLocaleLowerCase()) {
-      console.log("le mot green");
+  // const strRandom = () => {
+  //   let result = "";
+  //   let charactersLength = array.length;
+  //   result += array[Math.floor(Math.random() * charactersLength)];
+  //   setTest(result);
+  //   console.log(result);
+  // };
+
+  const compare = () => {
+    let valid = false;
+    if (value.toLocaleLowerCase() === noRepeat.toLocaleLowerCase()) {
+      console.log("le mot est green");
+      valid = true;
       setIsValid(true);
     } else {
-      console.log('first')
       setIsValid(false);
       let arrayValue = value.split("");
-      let arrayTest = test.split("");
+      let arrayTest = noRepeat.split("");
       for (let i = 0; i < arrayValue.length; i++) {
         const strSplit = arrayValue[i];
-        if (test.includes(strSplit.toUpperCase())) {
+        if (noRepeat.includes(strSplit.toUpperCase())) {
           for (let index = 0; index < arrayTest.length; index++) {
             const worldSplit = arrayTest[index];
             if (index === i) {
-              if (worldSplit.toLocaleUpperCase() === strSplit.toLocaleUpperCase()) {
-                console.log("color green ", strSplit, worldSplit);
+              if (
+                worldSplit.toLocaleUpperCase() === strSplit.toLocaleUpperCase()
+              ) {
+                // console.log("color green ", strSplit, worldSplit);
               }
               if (
                 worldSplit.toLocaleUpperCase() !==
                   strSplit.toLocaleUpperCase() &&
-                test.includes(strSplit.toUpperCase())
+                noRepeat.includes(strSplit.toUpperCase())
               ) {
-                console.log("color orange ", strSplit, worldSplit);
+                // console.log("color orange ", strSplit, worldSplit);
               }
             }
           }
@@ -99,43 +106,62 @@ const Tab2: React.FC = () => {
         }
       }
     }
-    setNbrTest(nbrTest+1)
-    console.log(nbrTest);
-    let text = await winLoose();
-    setStr(text);
-  };
 
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
-  };
+    setNbrTest(nbrTest + 1);
+    setIsValid(valid);
+    let result = "";
 
-  const winLoose =async()=>{
-    console.log(isValid)
-    let result = '';
-    if (nbrTest===6) {
-      if (isValid) {
-        result="Felicitations !!!!!"
-      }else{
-        result='Dommage, loose';
+    if (nbrTest === 5) {
+      if (valid) {
+        result = "Felicitations c'etait moin une !!!!!";
+      } else {
+        result = "Dommage, loose";
       }
-
       setIsrefrech(true);
     }
 
-
-    if (nbrTest<6) {
-      console.log("nbrTest>6");
-      if (isValid) {
-        result="Felicitations !!!!!"
-      }else{
-        result='Dommage, loose Vous pouvez reessayez';
+    if (nbrTest < 5) {
+      if (valid) {
+        result = "Felicitations !!!!!";
+      } else {
+        result = "Dommage, loose Vous pouvez reessayez encore";
       }
     }
 
-    console.log(result)
-    return result;
-  }
+    setStr(result);
+  };
 
+
+  // const winLoose = () => {
+  //   let result = "";
+  //   if (nbrTest === 6) {
+  //     if (isValid) {
+  //       result = "Felicitations !!!!!";
+  //     } else {
+  //       result = "Dommage, loose";
+  //     }
+
+  //     setIsrefrech(true);
+  //   }
+  //   if (nbrTest < 6) {
+  //     if (isValid) {
+  //       result = "Felicitations !!!!!";
+  //     } else {
+  //       result = "Dommage, loose Vous pouvez reessayez encore";
+  //     }
+  //   }
+
+  //   return result;
+  // };
+
+  const reset = () => {
+    setTest("Aucun Mot");
+    setNbrTest(0);
+    setNoRepeat("");
+    setValue("");
+  };
+
+  // const foundWord = () => {};
   return (
     <IonPage>
       <IonHeader>
@@ -149,23 +175,21 @@ const Tab2: React.FC = () => {
             <IonTitle size="large">Tab 2</IonTitle>
           </IonToolbar>
         </IonHeader>
-
-        <h1>Home</h1>
+        {/* <h1>Home</h1> */}
         <h1>{str}</h1>
-        <br/>
+        {/* <br/> */}
 
         <h1>{test}</h1>
         <h1>Nombre d'essai : {nbrTest}</h1>
+        <br />
+        <h1>{noRepeat}</h1>
+        <button onClick={randomValueFromArray}>repeat</button>
         {/* <button onClick={strRandom}>Generer</button> */}
-        <br/>
+        <button onClick={reset}>reset</button>
 
         <input onChange={handleChange} value={value} name="value" />
         <button onClick={compare}>Soumettre</button>
-        <br/>
-
-        <h1>{noRepeat}</h1>
-        <button onClick={randomValueFromArray}>repeat</button>
-
+        <br />
         {/* <ExploreContainer name="Tab 2 page" /> */}
       </IonContent>
     </IonPage>
