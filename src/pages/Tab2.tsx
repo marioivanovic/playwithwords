@@ -5,15 +5,11 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Tab2.css";
 
 const Tab2: React.FC = () => {
-  const [test, setTest] = useState("Aucun Mot");
-  const [value, setValue] = useState("");
-  const [noRepeat, setNoRepeat] = useState("");
-  const [color, setColor] = useState([{ color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []}]);
   const array = [
     "ABACA",
     "ABALE",
@@ -32,9 +28,23 @@ const Tab2: React.FC = () => {
     "ABOIS",
     "ABOLI",
   ];
-  let alreadyDone:any = [];
   const [arrI, setArrI] = useState([]);
+  const [isValid, setIsValid] = useState(false);
+  const [isRefrech, setIsrefrech] = useState(false);
+  const [test, setTest] = useState("Aucun Mot");
+  const [nbrTest, setNbrTest] = useState(0);
+  const [value, setValue] = useState("");
+  const [noRepeat, setNoRepeat] = useState("");
+  const [str, setStr] = useState("");
+  const [color, setColor] = useState([{ color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []},{color: "", value: []}]);
+  let alreadyDone:any = [];
+  // let nbrTest = 0;
 
+  useEffect(() => {
+    strRandom();
+    // randomValueFromArray();
+  }, [])
+  
 
   const randomValueFromArray = () => {
     if (arrI.length === 0) {
@@ -44,12 +54,9 @@ const Tab2: React.FC = () => {
     
     let randomValueIndex = Math.floor(Math.random() * arrI.length);
     let indexOfItemInMyArray = arrI[randomValueIndex];
-    
-    console.log(alreadyDone);
+
     arrI.splice(randomValueIndex, 1);
-    
-    console.log("arrI",arrI);
-    setNoRepeat(array[indexOfItemInMyArray])
+    setNoRepeat(array[indexOfItemInMyArray]);
   };
   
   const strRandom = () => {
@@ -60,12 +67,13 @@ const Tab2: React.FC = () => {
     console.log(result);
   };
 
-  const compare = () => {
-    let str = "";
+  const compare = async () => {
     if (value.toLocaleLowerCase() === test.toLocaleLowerCase()) {
       console.log("le mot green");
-      str = value;
+      setIsValid(true);
     } else {
+      console.log('first')
+      setIsValid(false);
       let arrayValue = value.split("");
       let arrayTest = test.split("");
       for (let i = 0; i < arrayValue.length; i++) {
@@ -91,12 +99,42 @@ const Tab2: React.FC = () => {
         }
       }
     }
+    setNbrTest(nbrTest+1)
+    console.log(nbrTest);
+    let text = await winLoose();
+    setStr(text);
   };
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
-    // console.log(e)
   };
+
+  const winLoose =async()=>{
+    console.log(isValid)
+    let result = '';
+    if (nbrTest===6) {
+      if (isValid) {
+        result="Felicitations !!!!!"
+      }else{
+        result='Dommage, loose';
+      }
+
+      setIsrefrech(true);
+    }
+
+
+    if (nbrTest<6) {
+      console.log("nbrTest>6");
+      if (isValid) {
+        result="Felicitations !!!!!"
+      }else{
+        result='Dommage, loose Vous pouvez reessayez';
+      }
+    }
+
+    console.log(result)
+    return result;
+  }
 
   return (
     <IonPage>
@@ -113,13 +151,22 @@ const Tab2: React.FC = () => {
         </IonHeader>
 
         <h1>Home</h1>
-        {/* <h1>{test}</h1>
-        <button onClick={strRandom}>Generer</button>
+        <h1>{str}</h1>
+        <br/>
+
+        <h1>{test}</h1>
+        <h1>Nombre d'essai : {nbrTest}</h1>
+        {/* <button onClick={strRandom}>Generer</button> */}
+        <br/>
+
         <input onChange={handleChange} value={value} name="value" />
-        <button onClick={compare}>Soumettre</button> */}
+        <button onClick={compare}>Soumettre</button>
+        <br/>
+
         <h1>{noRepeat}</h1>
         <button onClick={randomValueFromArray}>repeat</button>
-        <ExploreContainer name="Tab 2 page" />
+
+        {/* <ExploreContainer name="Tab 2 page" /> */}
       </IonContent>
     </IonPage>
   );
