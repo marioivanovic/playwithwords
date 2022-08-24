@@ -46,6 +46,7 @@ const App: React.FC = () => (
           <Route exact path="/home">
             <Home />
           </Route>
+
           <Route path="/user">
             <User />
           </Route>

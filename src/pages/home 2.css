@@ -1,0 +1,43 @@
+.container{
+    height: 100vh;
+    /* background: red; */
+}
+
+.title{
+    margin-top: 3em;
+    font-weight: 700;
+    color: white;
+}
+
+.header{
+width: 100%;
+margin-top: 3em;
+height: 50px;
+background: rgb(57, 188, 98);
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+}
+
+.arrowReset{
+    height: 40px;
+    width: 40px;
+    left: 14em;
+    margin-right: 5em;
+    background:#647276;
+    border-radius: 2px;
+    justify-content: center;
+    align-content: center;
+}
+
+.icon{
+    height: 35px;
+    width: 35px;
+ color: white;
+ z-index: 1;
+}
+
+.score{
+font-weight: 500;
+}
