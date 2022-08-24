@@ -1,0 +1,44 @@
+.global-content{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #ffffff;
+}
+.title-user{
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-top: 3em;
+}
+
+.header-user{
+background: green;
+height: 60px;
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.header-title{
+    color: #1c1c1c;
+}
+
+.main-container{
+    background: #2a2a2a;
+    height: 100%;
+    width: 100%;
+    display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+h3{
+    margin: 1em 0;
+    width: 100%;
+}
+
+/* .stats{
+    margin-top: 40px;
+} */
