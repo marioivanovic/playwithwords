@@ -11,7 +11,6 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { arrowBack, home, person } from "ionicons/icons";
-import Tab1 from "./pages/Tab1";
 import Home from "./pages/home";
 import User from "./pages/user";
 
@@ -41,12 +40,13 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
+          {/* <Route exact path="/tab1">
             <Tab1 />
-          </Route>
+          </Route> */}
           <Route exact path="/home">
             <Home />
           </Route>
+
           <Route path="/user">
             <User />
           </Route>
