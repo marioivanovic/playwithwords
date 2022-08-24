@@ -10,17 +10,10 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import {
-  arrowBack,
-  ellipse,
-  home,
-  person,
-  square,
-  triangle,
-} from "ionicons/icons";
+import { arrowBack, home, person } from "ionicons/icons";
 import Tab1 from "./pages/Tab1";
 import Home from "./pages/home";
-import Tab3 from "./pages/Tab3";
+import User from "./pages/user";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -54,8 +47,8 @@ const App: React.FC = () => (
           <Route exact path="/home">
             <Home />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
+          <Route path="/user">
+            <User />
           </Route>
           <Route exact path="/">
             <Redirect to="/tab1" />
@@ -70,9 +63,9 @@ const App: React.FC = () => (
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="user" href="/user">
             <IonIcon icon={person} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>user</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
